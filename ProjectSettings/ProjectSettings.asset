@@ -773,7 +773,7 @@ PlayerSettings:
       daydreamIconForeground: {fileID: 0}
       daydreamIconBackground: {fileID: 0}
   cloudServicesEnabled:
-    Collab: 1
+    Collab: 0
     UNet: 1
   luminIcon:
     m_Name: 
@@ -794,10 +794,10 @@ PlayerSettings:
   facebookXfbml: 0
   facebookFrictionlessRequests: 1
   apiCompatibilityLevel: 6
-  cloudProjectId: 417fce0f-ef17-4116-89d1-eabf5223c2bb
+  cloudProjectId: ecf06f71-147f-4c6d-b60b-8d2ed3d737b1
   framebufferDepthMemorylessMode: 0
   projectName: NT
-  organizationId: neucorp
+  organizationId: unity_du7fhyd15auvdq
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0
