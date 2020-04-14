@@ -94,7 +94,9 @@ using System.IO;
         if (reactionKey >= 0)
         {            
             int tg = answerCount - back_number;            
-            int ans = questionList[tg];            
+            int ans = questionList[tg];       
+            
+            //if correct then true adds to ev.
             ev = ans == reactionKey;
             Debug.Log("A:" + ans.ToString() + " R:" + reactionKey.ToString());
         }

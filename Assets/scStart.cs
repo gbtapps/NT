@@ -141,7 +141,23 @@ public class scStart : MonoBehaviour {
                 SceneManager.LoadScene("2_NBACK_Num");
             }
         }
-        
+        else if (flag_next == 3)
+        {
+            Vector3 pos = btnStart.transform.localPosition;
+            dy -= 100 * Time.deltaTime;
+            pos.y += dy;
+            btnStart.transform.localPosition = pos;
+            if (pos.y < 0)
+            {
+                cvsMe.enabled = false;
+                //cvsNext.enabled = true;
+                //cvsNext.SendMessage("Start");
+                flagUpdate = false;
+
+                SceneManager.LoadScene("2_NBACK_3DIGITS_Num");
+            }
+        }
+
     }
 
     public void onChange_Text_ID()
@@ -195,6 +211,29 @@ public class scStart : MonoBehaviour {
         audStart.Play();
         flag_next = 2;
     }
+
+
+    public void NextCanvas_NBACK_3DIGITS_NUM()//- N-back number
+    {
+        if (checkExpired()) return;
+        if (!scDataStore.debug_Start) scDataStore.Start();
+
+        scDataStore.answerCount = 0;
+        scDataStore.back_number = int.Parse(input_N.text);
+        scDataStore.speed = (int)slider_Speed.value;
+        scDataStore.isChallengeMode = false;
+        //PlayerPrefs.SetInt("back_number", scDataStore.back_number);
+        PlayerPrefs.SetInt("speed", scDataStore.speed);
+
+        scDataStore.nback_mode = scDataStore.enumNbackMode.number;
+
+        audStart.Play();
+        flag_next = 3;
+    }
+
+
+
+
 
     public void startSpeedTask()
     {
