@@ -48,6 +48,11 @@ public class scNBACK_3DIGITS_Num : MonoBehaviour
         scDataStore.NBACK_StartTime = Time.realtimeSinceStartup;
         //}
 
+
+        Debug.Log("scDataStore.speed: " + scDataStore.speed);
+        Debug.Log("scDataStore.startTime: " + scDataStore.startTime);
+
+
         //- Data store clear
         if (scDataStore.NBACK_StartTime == 0f) scDataStore.NBACK_StartTime = Time.realtimeSinceStartup;
         time_TaskStart = scDataStore.NBACK_StartTime;
@@ -141,16 +146,19 @@ public class scNBACK_3DIGITS_Num : MonoBehaviour
             scDataStore.checkAnswer(0, -1);//- dummy
             //NewText();
             isWaiting = true;
-            waitDulation = 2; waitStart = Time.realtimeSinceStartup;
+//            waitDulation = 2; waitStart = Time.realtimeSinceStartup;
+            waitDulation = 3; waitStart = Time.realtimeSinceStartup;
             flag_Move = true;
         }
-
         //- Check time for fast mode
         else if (scDataStore.speed == 1)//- fast mode
         {
-            if (Time.realtimeSinceStartup - timeStart > 2)
-            {
-                ButtonCallback_answer(-2);//- time is up
+//            if (Time.realtimeSinceStartup - timeStart > 2)
+                if (Time.realtimeSinceStartup - timeStart > 3)
+                {
+                    //                Debug.Log("Update().Timeup condition");
+                    ButtonCallback_answer(-2);
+                //- time is up
             }
         }
 
@@ -161,29 +169,50 @@ public class scNBACK_3DIGITS_Num : MonoBehaviour
     public void ButtonCallback_answer(int reactionKey)
     {
 
+
+        //Added by moritomi
+        //It makes N digits string.
         if (reactionKey != -2)
         {
             _3digitsStr += reactionKey.ToString();
+            Debug.Log("_3digitsStr: " + _3digitsStr);
         }
+        //
 
-        Debug.Log("_3digitsStr: " + _3digitsStr);
 
-        if(_3digitsStr.Length != 3)
+
+        // Added by moritomi
+        // Going out of this function with out of condition.
+        if ( reactionKey != -2 && _3digitsStr.Length != 3)
         {
-            Debug.Log("_3digitsStr.Length != 3");
             return;
         }
-
-//        int i = int.Parse("123");
-
-        int RKey = int.Parse(_3digitsStr);
-
-        Debug.Log("RKey: " + RKey);
+        //
 
 
-        //Debug.Log(reactionKey.ToString());
+        // Added by moritomi
+        // It makes 3 digits integer or -2 integer to do timeout.
+        int _3digitInt;
+        if (reactionKey == -2)
+        {
+            _3digitsStr = "-2";
+        }        
+        _3digitInt = int.Parse(_3digitsStr);
+        Debug.Log("_3digitInt: " + _3digitInt);
+        //////
+
+
+
+
+        //Original
         //        bool result = scDataStore.checkAnswer(Time.realtimeSinceStartup - timeStart, reactionKey);
-        bool result = scDataStore.checkAnswer(Time.realtimeSinceStartup - timeStart, RKey);
+
+        // Added by moritomi  
+        // It customes original to it can handle N digits integer.
+        bool result = scDataStore.checkAnswer(Time.realtimeSinceStartup - timeStart, _3digitInt);
+        /////
+
+
 
         if (reactionKey == -2)
         {
@@ -191,8 +220,16 @@ public class scNBACK_3DIGITS_Num : MonoBehaviour
         }
         else
         {
-//            txtObjReaction.text = reactionKey.ToString();
-            txtObjReaction.text = RKey.ToString();
+            txtObjReaction.text = reactionKey.ToString();
+
+        }
+
+        // Added by moritomi
+        // It shows the 3 digit number user tapped numerical buttons.
+        if(reactionKey != -2)
+        {
+            txtObjReaction.text = _3digitInt.ToString();
+
         }
 
         if (result)
@@ -208,7 +245,12 @@ public class scNBACK_3DIGITS_Num : MonoBehaviour
             soundNo.Play();
         }
 
+
+        // Added by moritomi
+        // It clears the answer or timeout flg.
         _3digitsStr = "";
+        /////
+
         flag_Move = true;
 
     }
