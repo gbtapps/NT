@@ -26,10 +26,18 @@ public class scStart : MonoBehaviour {
     public InputField input_Challenge_Nbk;
 
     public InputField userID;
+
+
+    [SerializeField] Text AppVersion;
           
     // Use this for initialization
     void Start () {
-        
+
+
+        Debug.Log("Application Version : " + Application.version);
+
+        AppVersion.text = "NT-"+Application.version;
+
         //if (checkExpired())
         //{
         //txtMessage.text = "アプリの利用期限が切れました。";
